@@ -3,29 +3,24 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         RealEstate realEstate = new RealEstate();
-        Constant constant = new Constant();
         int userChoice=0;
         Scanner scanner = new Scanner(System.in);
-        while (userChoice!=constant.NUMBER_THREE) {
+        while (userChoice!=Constant.FINISH_THE_PROGRAM) {
         do {
             System.out.println("Choose your desired option: between 1-3 ");
-            System.out.println("1: Create a new account"+"\n"+ "2: To login into an existing"
-                    +"\n"+ "3: Exit the program");
+            System.out.println(Constant.MAIN_MENU);
             userChoice = scanner.nextInt(); //to chang to not only int ...!!!
-        }while (userChoice>Constant.NUMBER_THREE||userChoice<constant.NUMBER_ONE);
+        }while (userChoice>Constant.MAXIMUM_RANG||userChoice<Constant.MINIMUM_RANG);
 
-            if (userChoice == constant.NUMBER_ONE) {
-                realEstate.createUser();
-            }
-            if (userChoice == constant.NUMBER_TWO) {
-                User myUser = realEstate.Login();
+            switch (userChoice) {
+                case Constant.CREATE_USER-> realEstate.createUser();
+                case Constant.LOG_IN_INTO_EXISTED_ACCOUNT-> {
+                    User myUser = realEstate.Login();
                 if (myUser!=null){
                     System.out.println("\"Choose your desired option: between 1-6 \"");
-                    System.out.println("1: Pablish a new property"+"\n"+ "2: To remove a proprty"
-                            +"\n"+ "3: to show all property" + "\n" + "4: to show only user property" +
-                            "\n"+ "5:search property"+"\n"+"6: log out");
+                    System.out.println(Constant.INTERNAL_MENU);
                     int secondUserChoice = scanner.nextInt();
-                    while (userChoice!=constant.NUMBER_THREE) {
+                    while (userChoice!= Constant.VIEW_ALL_THE_PROPERTIES) {
                         switch (secondUserChoice) {
                             case Constant.POST_NEW_PROPERTY-> realEstate.postNewProperty(myUser);
                             case Constant.REMOVE_PROPERTY_POST -> realEstate.removeProperty(myUser);
@@ -35,23 +30,20 @@ public class Main {
                             case Constant.LOG_OUT_AND_RETURN_TO_THE_MAIN_MENU -> {
                                 do {
                                     System.out.println("Choose your desired option: between 1-3 ");
-                                    System.out.println("1: Create a new account"+"\n"+ "2: To login into an existing"
-                                            +"\n"+ "3: Exit the program");
+                                    System.out.println(Constant.MAIN_MENU);
                                     userChoice = scanner.nextInt(); //to chang to not only int ...!!!
                                 }while (userChoice>3||userChoice<1);}
 
                         }
-                        if (secondUserChoice!=constant.NUMBER_SIX){
+                        if (secondUserChoice!=Constant.LOG_OUT_AND_RETURN_TO_THE_MAIN_MENU){
                         System.out.println("\"Choose your desired option: between 1-6 \"");
-                        System.out.println("1: Pablish a new property"+"\n"+ "2: To remove a proprty"
-                                +"\n"+ "3: to show all property" + "\n" + "4: to show only user property" +
-                                "\n"+ "5:search property"+"\n"+"6: log out");
+                        System.out.println(Constant.INTERNAL_MENU);
                         secondUserChoice = scanner.nextInt();
                     }}
                 }
                 else {
                     System.out.println("not exist...");
-                }
+                }}
             }
 
         }
