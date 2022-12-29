@@ -3,13 +3,15 @@ public class Property {
     private String street;
     private int roomNumbers;
     private int price;
-    private String [] types;
+    private String [] types = new String[]{"apartment" ,"build"};
     private int type; //!!!!!!!!
     private String isForRent; //!!!!!!!!!!!
     private int houseNumber;
     private int floorNumber;
     private User userName;
 
+    public static final int GROUND_FLOOR = 1;
+    public static final int BUILDING = 2;
     Property (City city,String street,int propertyType,int floorLevel,int roomAmount,int propertySerialNumber,String rentOrSell,int price){
       this.city =city;
       this.street = street;

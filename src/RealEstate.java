@@ -50,7 +50,7 @@ public class RealEstate {
             }while (isExist);
         System.out.println("Please enter a password according to these security rules: \n" +
                 "1. At least 5 characters.\n" +
-                "2. At least 1 number\n" +
+                "2. At least 1 digit\n" +
                 "3. At least 1 special characters from the following ($,%,_)");
         userPassword = scannerText.nextLine();
         System.out.println("Please enter your phone number");
@@ -119,7 +119,7 @@ public class RealEstate {
                     boolean isPublished = true;
                     int counter = 0;
                     boolean canPost = true;
-                    if(properties!=null)
+                    if(properties!=null){
                         for (int i = 0; i < properties.length; i++) {
                             if (this.properties[i].getUserName() == user.getUserName()) {
                                 counter++;
@@ -131,7 +131,7 @@ public class RealEstate {
                                     System.out.println("You have reached your quota");
                                 }
                             }
-                        }
+                        }}
                     String city="";
                     City myCity = new City();
                     String street="";
@@ -142,10 +142,11 @@ public class RealEstate {
                     String rentOrSell; //!!!!! המשתנה צריך להיות boolean , אתה יכול לקלוט מהמשתמש תשובה של 1/0 ןלתרגם אותה לטרו/פולס
                     int price;
                     int i = 0;
-                    boolean proceedToStreet = true;
-                    boolean proceedToType = true;
+                    boolean proceedToStreet = false;
+                    boolean proceedToType = false;
                     boolean proceedToRoomAmount = true;
                     if (canPost) {
+                        System.out.println("In which city do you want to advertise the property?");
                         for (i = 0; i < cities.length; i++) {
                             System.out.println(this.cities[i].getCityName());
                         }
@@ -153,35 +154,37 @@ public class RealEstate {
                         city = scanner.nextLine();
                         for ( i = 0; i < cities.length; i++) {
                             if (!city.equals(this.cities[i].getCityName())) {
-                                System.out.println("Invalid city name.");
-                                proceedToStreet = false;
+                                proceedToStreet = true;
+                                break;
                             }
-                            //שים לב שהוא ישר מדפיס "שם העיר לא קיים" לפני שהוא בודק את כולן...
                         }
                     }
-                    if (!proceedToStreet) { //למה אתה מאתחל את שם העיר אם היא לא נכונה?
+                    if (!proceedToStreet) {
+                        System.out.println("inValid city name");//למה אתה מאתחל את שם העיר אם היא לא נכונה?
                         myCity.setCityName(city);
                         isPublished = false;
                     } else {
+                        System.out.println("In which street do you want to advertise the property?");
                             System.out.println(this.cities[i].getStreetsList());
                         }
                         System.out.println("Enter street name");
                         street = scanner.nextLine();
                         String [] arrayOfStreets  = this.cities[i].getStreetsList().split(" ") ;
                         for (i = 0; i < arrayOfStreets.length; i++) {
-                            if (!street.equals(arrayOfStreets[i])) {
-                                System.out.println("Invalid city name."); //same like city
-                                proceedToType = false;
+                            if (street.equals(arrayOfStreets[i])) {
+                                proceedToType = true;
+                                break;
                             }
                         }
                         if (!proceedToType) {
+                            System.out.println("in valid street name");
                             isPublished = false;
                         } else {
                             Property myProperty = new Property();
                             for ( i = 0; i < myProperty.getTypes().length; i++) {
                                 System.out.println(myProperty.getTypes()[i]);
                             }
-                            System.out.println("Enter the type of the property");
+                            System.out.println("Enter the type of the property: 1 for...2 for...");
                             propertyType = scanner.nextInt();
                             for (i = 0; i < myProperty.getTypes().length; i++) {
                                 if (propertyType != i) {
@@ -237,6 +240,7 @@ public class RealEstate {
             }
             System.out.println("Please choose the number of the property you want to removed");
             propertyToRemove=scanner.nextInt();
+            //do while
             propertyToRemove = arrayOfIndex[propertyToRemove-1];
             int myIndex=0;
             for (int i=0;i<properties.length;i++){
@@ -263,6 +267,9 @@ public class RealEstate {
                 System.out.println(properties[i]);
             }
         }
+        else {
+            System.out.println("no property to publish");
+        }
         }
         void printProperties(User user){
             if (properties!=null){
@@ -271,6 +278,9 @@ public class RealEstate {
                         System.out.println(properties[i]);
                     }
                 }
+            }
+            else {
+                System.out.println("no property to publish");
             }
         }
         Property [] search(){
@@ -285,17 +295,24 @@ public class RealEstate {
             arrayOfAnswer[i] = scanner.nextLine();
         }
         int counterOfProp=0;
+        Property [] newP;
+        if (properties!=null){
         for (int i=0;i<properties.length;i++) {
           if ( conditionFilter(arrayOfAnswer,i)){
               counterOfProp++;
-          }}
-            Property [] newP = new Property[counterOfProp];
+          }}}
+           newP = new Property[counterOfProp];
+        if (properties!=null){
         for (int i=0;i<properties.length;i++){
             if (conditionFilter(arrayOfAnswer,i)){
                newP[indexOfArrayNewP]=properties[i];
                indexOfArrayNewP++;
-            }
+            }}}
+        else {
+            System.out.println("0 property");
         }
+
+
         return newP;
         }
         boolean conditionFilter( String [] arrayOfAnswer,int propertyToCheck){

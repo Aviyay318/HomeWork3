@@ -78,7 +78,7 @@ public class User {
         boolean isValid=true;
         String digits="0123456789";
         String necessaryChar ="$%_";
-        if (password.length()!=5){
+        if (password.length()<5){
             isValid=false;
         }
         if (isValid==true){

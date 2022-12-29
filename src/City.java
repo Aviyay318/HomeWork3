@@ -14,7 +14,7 @@ public class City {
         String cityContent;
         cityContent= "The name of the city" + this.cityName
                 + "The geographic district" + this.geographicDistrict+
-                "The name of the streets" + streetsList;
+                "List of streets" + streetsList;
         return cityContent;
     }
     public String getCityName() {
