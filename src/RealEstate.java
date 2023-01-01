@@ -96,7 +96,7 @@ public class RealEstate {
         newUsers[newUsers.length-1]=user;
         return newUsers;
     }
-        User Login(){
+       public User Login(){
             Scanner scanner=new Scanner(System.in);
             if (users!=null) {
                 System.out.println("Enter your Username");
